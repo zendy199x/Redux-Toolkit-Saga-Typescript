@@ -33,6 +33,7 @@ const authSlice = createSlice({
     },
     loginFailed(state, action: PayloadAction<string>) {
       state.logging = false;
+      console.log(action.payload);
     },
 
     logout(state) {
