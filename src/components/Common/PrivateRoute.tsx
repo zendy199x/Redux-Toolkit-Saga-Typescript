@@ -8,7 +8,6 @@ export const PrivateRoute = (props: RouteProps) => {
 
   const isLoggedIn = Boolean(localStorage.getItem('access_token'));
   if (!isLoggedIn) return <Redirect to="/login" />
-  if (props.path === "/") return <Redirect to="/admin" />
 
   return (
     <Route {...props} />
