@@ -13,4 +13,3 @@ const LoginPage = (props: LoginPageProps) => {
 }
 
 export default LoginPage
-

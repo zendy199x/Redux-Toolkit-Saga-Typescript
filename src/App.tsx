@@ -2,7 +2,7 @@ import cityApi from 'api/cityApi';
 import { NotFound, PrivateRoute } from 'components/Common';
 import LoginPage from 'features/auth/pages/LoginPage';
 import React, { useEffect } from 'react';
-import { Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { AdminLayout } from './components/Layout';
 
 function App() {
@@ -11,19 +11,21 @@ function App() {
   })
 
   return (
-    <Switch>
-      <PrivateRoute path="/login">
-        <LoginPage />
-      </PrivateRoute>
+    <>
+      <Switch>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
 
-      <PrivateRoute path="/admin">
-        <AdminLayout />
-      </PrivateRoute>
+        <PrivateRoute path="/admin">
+          <AdminLayout />
+        </PrivateRoute>
 
-      <PrivateRoute>
-        <NotFound />
-      </PrivateRoute>
-    </Switch>
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+    </>
   );
 }
 
