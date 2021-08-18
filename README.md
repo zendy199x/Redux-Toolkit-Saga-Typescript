@@ -92,3 +92,19 @@ const function App() {
 --> We'll go with this solution for now.
 
 Lib: connected-react-router + custom history
+
+### Handle loading / error in redux saga
+
+- RTK + Thunk: provide a way to await an async action right on component
+--> Handle loading/error on component easily
+
+- RTK + Saga: doesn't have a way to do so
+--> what to do?
+
+imho, my suggestions:
+- LOADING: can based on redux store
+- ERROR: eliminate the usage as much as you can. 
+
+Considerations:
+- Trigger error toast from saga.
+- Consider to call API directly on component instead of going through saga.

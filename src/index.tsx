@@ -1,7 +1,7 @@
 // import { BrowserRouter } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
+import { CircularProgress, CssBaseline } from '@material-ui/core';
 import { ConnectedRouter } from 'connected-react-router';
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { history } from 'utils';
@@ -12,15 +12,17 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-      {/* <BrowserRouter> */}
-        <CssBaseline>
-          <App />
-        </CssBaseline>
-      {/* </BrowserRouter> */}
-      </ConnectedRouter>
-    </Provider>
+    <Suspense fallback={<CircularProgress size="20" color="secondary" />}>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          {/* <BrowserRouter> */}
+          <CssBaseline>
+            <App />
+          </CssBaseline>
+          {/* </BrowserRouter> */}
+        </ConnectedRouter>
+      </Provider>
+    </Suspense>
   </React.StrictMode>,
   document.getElementById('root')
 );
