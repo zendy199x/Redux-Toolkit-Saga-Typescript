@@ -45,7 +45,7 @@ const dashboardSlice = createSlice({
     fetchDataSuccess(state) {
       state.loading = false;
     },
-    fetchDataField(state) {
+    fetchDataFaild(state) {
       state.loading = false;
     },
 
@@ -69,7 +69,7 @@ export const dashboardActions = dashboardSlice.actions;
 
 // Selector
 export const selectDashboardLoading = (state: RootState) => state.dashboard.loading;
-export const selectDashboardStatistics = (state: RootState) => state.dashboard.statistics;
+export const selectStatistics = (state: RootState) => state.dashboard.statistics;
 export const selectHighestStudentList = (state: RootState) => state.dashboard.hightestStudentList;
 export const selectLowestStudentList= (state: RootState) => state.dashboard.lowestStudentList;
 export const selectRankingCityList = (state: RootState) => state.dashboard.rankingByCityList;
