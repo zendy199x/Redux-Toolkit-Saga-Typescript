@@ -4,7 +4,7 @@ import React, { lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 const Dashboard = lazy(() => import('./../../features/dashboard'));
-const StudentFeature = lazy(() => import('./../../features/students'));
+const StudentFeature = lazy(() => import('../../features/student'));
 
 const useStyles = makeStyles(theme => ({
   root: {
