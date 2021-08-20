@@ -1,13 +1,7 @@
-import React from 'react'
-
-
+import React from 'react';
 
 const AddEditPage = () => {
-  return (
-    <div>
-      Add Edit Student Page
-    </div>
-  )
-}
+  return <div>Add Edit Student Page</div>;
+};
 
-export default AddEditPage
+export default AddEditPage;

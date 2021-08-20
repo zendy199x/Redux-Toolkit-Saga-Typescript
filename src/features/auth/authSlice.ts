@@ -18,7 +18,7 @@ const initialState: AuthState = {
   isLoggedIn: false,
   logging: false,
   currentUser: undefined,
-}
+};
 
 const authSlice = createSlice({
   name: 'auth',
@@ -40,9 +40,9 @@ const authSlice = createSlice({
     logout(state) {
       state.isLoggedIn = false;
       state.currentUser = undefined;
-    }
-  }
-})
+    },
+  },
+});
 
 // Actions
 export const authActions = authSlice.actions;

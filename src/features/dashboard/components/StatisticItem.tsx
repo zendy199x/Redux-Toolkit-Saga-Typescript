@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
 
     padding: theme.spacing(2),
-    border: `1px solid ${theme.palette.divider}`
+    border: `1px solid ${theme.palette.divider}`,
   },
 }));
 
@@ -27,7 +27,9 @@ const StatisticItem = ({ icon, label, value }: StatisticItemProps) => {
       <Box>{icon}</Box>
 
       <Box>
-        <Typography variant="h5" align="right">{value}</Typography>
+        <Typography variant="h5" align="right">
+          {value}
+        </Typography>
         <Typography variant="caption">{label}</Typography>
       </Box>
     </Paper>
