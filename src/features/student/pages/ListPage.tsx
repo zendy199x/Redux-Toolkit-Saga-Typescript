@@ -3,7 +3,7 @@ import {
   Button,
   LinearProgress,
   makeStyles,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import studentApi from 'api/studentApi';
@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { selectCityList, selectCityMap } from 'features/city/citySlice';
 import { ListParams, Student } from 'models';
 import React, { useEffect } from 'react';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import StudentFilters from '../components/StudentFilters';
 import StudentTable from '../components/StudentTable';
 import {
@@ -18,7 +19,7 @@ import {
   selectStudentList,
   selectStudentLoading,
   selectStudentPagination,
-  studentActions
+  studentActions,
 } from '../studentSlice';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ListPage = () => {
   const classes = useStyles();
+
+  const match = useRouteMatch();
+  const history = useHistory();
 
   const dispatch = useAppDispatch();
 
@@ -90,6 +94,10 @@ const ListPage = () => {
     }
   };
 
+  const handleEditStudent = async (student: Student) => {
+    history.push(`${match.url}/${student.id}`);
+  };
+
   return (
     <Box className={classes.root}>
       {(studentLoading || cityLoading) && (
@@ -99,9 +107,11 @@ const ListPage = () => {
       <Box className={classes.titleContainer}>
         <Typography variant="h5">Students</Typography>
 
-        <Button variant="contained" color="primary">
-          Add new student
-        </Button>
+        <Link to={`${match.url}/add`} style={{ textDecoration: 'none' }}>
+          <Button variant="contained" color="primary">
+            Add new student
+          </Button>
+        </Link>
       </Box>
 
       <Box mb={3}>
@@ -120,6 +130,7 @@ const ListPage = () => {
         cityMap={cityMap}
         pageSize={pagination._limit}
         currentPage={pagination._page}
+        onEdit={handleEditStudent}
         onRemove={handleRemoveStudent}
       />
 
