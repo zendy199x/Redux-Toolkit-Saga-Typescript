@@ -3,12 +3,13 @@ import {
   Button,
   LinearProgress,
   makeStyles,
-  Typography,
+  Typography
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
+import studentApi from 'api/studentApi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { selectCityList, selectCityMap } from 'features/city/citySlice';
-import { ListParams } from 'models';
+import { ListParams, Student } from 'models';
 import React, { useEffect } from 'react';
 import StudentFilters from '../components/StudentFilters';
 import StudentTable from '../components/StudentTable';
@@ -17,7 +18,7 @@ import {
   selectStudentList,
   selectStudentLoading,
   selectStudentPagination,
-  studentActions,
+  studentActions
 } from '../studentSlice';
 
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +77,19 @@ const ListPage = () => {
     dispatch(studentActions.setFilter(newFilter));
   };
 
+  const handleRemoveStudent = (student: Student) => {
+    try {
+      // Remove student API
+      studentApi.remove(student?.id || '');
+
+      // Trigger to re-fetch student list with current filter
+      const newFilter = { ...filter };
+      dispatch(studentActions.fetchStudentList(newFilter));
+    } catch (error) {
+      console.log('Failed to fetch student', error);
+    }
+  };
+
   return (
     <Box className={classes.root}>
       {(studentLoading || cityLoading) && (
@@ -106,6 +120,7 @@ const ListPage = () => {
         cityMap={cityMap}
         pageSize={pagination._limit}
         currentPage={pagination._page}
+        onRemove={handleRemoveStudent}
       />
 
       {/* Pagination */}
