@@ -25,6 +25,8 @@ export interface StudentTableProps {
   cityMap: {
     [key: string]: City;
   };
+  currentPage: number;
+  pageSize: number;
   onEdit?: (student: Student) => void;
   onRemove?: (student: Student) => void;
 }
@@ -32,6 +34,8 @@ export interface StudentTableProps {
 const StudentTable = ({
   studentList,
   cityMap,
+  currentPage,
+  pageSize,
   onEdit,
   onRemove,
 }: StudentTableProps) => {
@@ -42,6 +46,7 @@ const StudentTable = ({
       <Table className={classes.table} size="small" aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell>No.</TableCell>
             <TableCell>ID</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Gender</TableCell>
@@ -52,8 +57,9 @@ const StudentTable = ({
         </TableHead>
 
         <TableBody>
-          {studentList.map((student) => (
+          {studentList.map((student, index) => (
             <TableRow key={student.id}>
+              <TableCell>{index + 1 + pageSize * (currentPage - 1)}</TableCell>
               <TableCell width="310">{student.id}</TableCell>
               <TableCell>{student.name}</TableCell>
               <TableCell>{capitalizeString(student.gender)}</TableCell>

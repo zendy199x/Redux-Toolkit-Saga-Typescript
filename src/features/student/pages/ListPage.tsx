@@ -101,7 +101,12 @@ const ListPage = () => {
       </Box>
 
       {/* Student Table */}
-      <StudentTable studentList={studentList} cityMap={cityMap} />
+      <StudentTable
+        studentList={studentList}
+        cityMap={cityMap}
+        pageSize={pagination._limit}
+        currentPage={pagination._page}
+      />
 
       {/* Pagination */}
       <Box my={2} display="flex" justifyContent="flex-end">
