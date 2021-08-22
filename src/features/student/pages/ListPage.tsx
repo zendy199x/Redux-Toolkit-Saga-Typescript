@@ -72,6 +72,10 @@ const ListPage = () => {
     dispatch(studentActions.setFilterWithDebounce(newFilter));
   };
 
+  const handleFilterChange = (newFilter: ListParams) => {
+    dispatch(studentActions.setFilter(newFilter));
+  };
+
   return (
     <Box className={classes.root}>
       {(studentLoading || cityLoading) && (
@@ -92,6 +96,7 @@ const ListPage = () => {
           filter={filter}
           cityList={cityList}
           onSearchChange={handleSearchChange}
+          onChange={handleFilterChange}
         />
       </Box>
 
