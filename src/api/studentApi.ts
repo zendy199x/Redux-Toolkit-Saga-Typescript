@@ -6,7 +6,7 @@ const studentApi = {
   getAll(params: ListParams): Promise<ListResponse<Student>> {
     const url = '/students';
     return axiosClient.get(url, {
-      params
+      params,
     });
   },
 
@@ -20,8 +20,8 @@ const studentApi = {
     return axiosClient.post(url, data);
   },
 
-  update(data: Student): Promise<Student> {
-    const url = '/students';
+  update(data: Partial<Student>): Promise<Student> {
+    const url = `/students/${data.id}`;
     return axiosClient.patch(url, data);
   },
 

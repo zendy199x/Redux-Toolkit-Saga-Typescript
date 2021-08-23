@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, CircularProgress } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { useAppSelector } from 'app/hooks';
 import {
   InputField,
@@ -8,7 +9,7 @@ import {
 } from 'components/FormFields';
 import { selectCityOption } from 'features/city/citySlice';
 import { Student } from 'models';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -22,10 +23,8 @@ const StudentForm = ({ initialValues, onSubmit }: StudentFormProps) => {
     name: yup
       .string()
       .required('Please enter name.')
-      .test(
-        'two-words',
-        'Please enter at least two words',
-        (value) => !value ? true : value?.split(' ').filter((x) => !!x).length > 2
+      .test('two-words', 'Please enter at least two words', (value) =>
+        !value ? true : value?.split(' ').filter((x) => !!x).length > 2
       ),
     age: yup
       .number()
@@ -49,14 +48,26 @@ const StudentForm = ({ initialValues, onSubmit }: StudentFormProps) => {
   });
 
   const cityOptions = useAppSelector(selectCityOption);
+  const [error, setError] = useState('');
 
-  const { control, handleSubmit } = useForm<Student>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<Student>({
     defaultValues: initialValues,
     resolver: yupResolver(schema),
   });
 
-  const handleFormSubmit = (formValues: Student) => {
-    console.log(`Submit`, formValues);
+  const handleFormSubmit = async (formValues: Student) => {
+    try {
+      // Clear previous submission error
+      setError('');
+
+      await onSubmit?.(formValues);
+    } catch (error) {
+      setError(error.message);
+    }
   };
   return (
     <Box maxWidth={400}>
@@ -83,16 +94,26 @@ const StudentForm = ({ initialValues, onSubmit }: StudentFormProps) => {
         <InputField name="age" control={control} label="Age" type="number" />
         <InputField name="mark" control={control} label="Mark" type="number" />
 
-        <SelectField
-          name="city"
-          control={control}
-          label="City"
-          options={cityOptions}
-        />
+        {Array.isArray(cityOptions) && !!cityOptions.length && (
+          <SelectField
+            name="city"
+            control={control}
+            label="City"
+            options={cityOptions}
+          />
+        )}
+
+        {error && <Alert severity="error">{error}</Alert>}
 
         <Box mt={3}>
-          <Button type="submit" variant="contained" color="primary">
-            Save
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isSubmitting}
+          >
+            {isSubmitting && <CircularProgress size={16} color="secondary" />}{' '}
+            &nbsp;Save
           </Button>
         </Box>
       </form>
