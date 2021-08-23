@@ -4,6 +4,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { history } from 'utils';
 import App from './App';
 import { store } from './app/store';
@@ -21,6 +23,18 @@ ReactDOM.render(
           </CssBaseline>
           {/* </BrowserRouter> */}
         </ConnectedRouter>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </Provider>
     </Suspense>
   </React.StrictMode>,
