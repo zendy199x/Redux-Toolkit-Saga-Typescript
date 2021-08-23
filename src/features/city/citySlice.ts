@@ -34,6 +34,7 @@ const citySlice = createSlice({
 export const cityActions = citySlice.actions;
 
 // Selectors
+export const selectCityLoading = (state: RootState) => state.city.loading;
 export const selectCityList = (state: RootState) => state.city.list;
 export const selectCityMap = createSelector(selectCityList, (cityList) =>
   cityList.reduce(
@@ -49,7 +50,12 @@ export const selectCityMap = createSelector(selectCityList, (cityList) =>
     {}
   )
 );
-export const selectCityLoading = (state: RootState) => state.city.loading;
+export const selectCityOption = createSelector(selectCityList, (cityList) =>
+  cityList.map((city) => ({
+    label: city.name,
+    value: city.code,
+  }))
+);
 
 // Reducer
 const cityReducer = citySlice.reducer;
